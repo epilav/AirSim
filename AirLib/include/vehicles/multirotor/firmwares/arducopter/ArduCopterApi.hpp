@@ -291,6 +291,9 @@ private:
         }
     }
 
+    void sendSensors();
+
+#if 0
     void sendSensors()
     {
         if (sensors_ == nullptr)
@@ -393,6 +396,7 @@ private:
             udpSocket_->sendto(buf, strlen(buf), ip, port);
         }
     }
+#endif
 
     void recvRotorControl()
     {
