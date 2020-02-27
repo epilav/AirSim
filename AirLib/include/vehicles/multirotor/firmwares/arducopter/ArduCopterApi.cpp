@@ -88,7 +88,7 @@ void ArduCopterApi::sendSensors()
             buffer.putString(distance->getName());
             buffer.put<float>(
                 distance_output.distance, distance_output.max_distance, distance_output.min_distance,
-                pitch, roll, yaw);
+                roll, pitch, yaw);
         }
     }
 
@@ -98,7 +98,7 @@ void ArduCopterApi::sendSensors()
     // {
     //     angular-velocity:        3 floats
     //     linear-acceleration:     3 floats
-    //     roll:                    float
+    //     roll:                    float 
     //     pitch:                   float
     //     yaw:                     float
     // }
@@ -109,7 +109,7 @@ void ArduCopterApi::sendSensors()
     buffer.put<float>(
         imu_output.angular_velocity[0], imu_output.angular_velocity[1], imu_output.angular_velocity[2],
         imu_output.linear_acceleration[0], imu_output.linear_acceleration[1], imu_output.linear_acceleration[2],
-        pitch, roll, yaw);
+        roll, pitch, yaw);
 
     // GPS
     // ---
@@ -123,8 +123,8 @@ void ArduCopterApi::sendSensors()
     const auto& gps_output = getGps()->getOutput();
     toc_gps = static_cast<uint16_t>(buffer.getIndex());
     buffer.put<double>(
-        gps_output.gnss.geo_point.latitude, gps_output.gnss.geo_point.longitude, gps_output.gnss.geo_point.altitude,
-        gps_output.gnss.velocity[0], gps_output.gnss.velocity[1], gps_output.gnss.velocity[2]);
+        gps_output.gnss.geo_point.latitude, gps_output.gnss.geo_point.longitude, gps_output.gnss.geo_point.altitude);
+    buffer.put<float>(gps_output.gnss.velocity[0], gps_output.gnss.velocity[1], gps_output.gnss.velocity[2]);
 
     // Build the TOC
     buffer.setIndex(0);

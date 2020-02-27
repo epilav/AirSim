@@ -105,31 +105,6 @@ public:
         incrementPos(sizeof(T) * n_elems);
     }
 
-    template <typename T>
-    T get()
-    {
-        assert(pos_ + sizeof(T) < bytes_ + N);
-        T r = *(reinterpret_cast<T*>(pos_));
-        pos_ += sizeof(T);
-        return r;
-    }
-
-    std::string getString()
-    {
-        auto size = get<uint32_t>();
-        assert(pos_ + size < bytes_ + N);
-        return std::string(pos_, size);
-    }
-
-    template <typename T>
-    std::vector<T> getVector()
-    {
-        auto size = get<uint32_t>();
-        T* start = reinterpret_cast<T *>(pos_);
-        pos_ += sizeof(T) * size;
-        return std::vector<T>(start, pos_);
-    }
-
 protected:
     void incrementPos(std::size_t n)
     {
